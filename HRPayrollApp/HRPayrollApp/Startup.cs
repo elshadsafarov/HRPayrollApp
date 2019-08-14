@@ -6,6 +6,7 @@ using HRPayrollApp.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,8 @@ namespace HRPayrollApp
             {
                 x.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
             });
+
+            services.AddIdentity<User, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<PayrollDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +50,8 @@ namespace HRPayrollApp
 
             app.UseMvc(route =>
             {
-                //route.MapRoute(name: "", template: "{area=exists}/{controller=Home}/{action=Index}/{id?}");
+                route.MapRoute(name: "", template: "{controller=Account}/{action=Login}");
+                route.MapRoute(name: "", template: "{area=exists}/{controller=Home}/{action=Index}/{id?}");
                 route.MapRoute(name: "", template: "{controller=Employee}/{action=Index}");
             });
             app.UseStaticFiles();
