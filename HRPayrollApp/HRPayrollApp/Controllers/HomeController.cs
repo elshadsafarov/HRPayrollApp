@@ -19,7 +19,7 @@ namespace HRPayrollApp.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List<Employees> employees = dbContext.Employees.ToList();
+            List<Employee> employees = dbContext.Employees.ToList();
             return View(employees);
         }
     }

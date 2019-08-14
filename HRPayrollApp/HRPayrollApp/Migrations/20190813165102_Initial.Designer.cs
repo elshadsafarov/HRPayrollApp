@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRPayrollApp.Migrations
 {
     [DbContext(typeof(PayrollDbContext))]
-    [Migration("20190811144155_Initial")]
+    [Migration("20190813165102_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

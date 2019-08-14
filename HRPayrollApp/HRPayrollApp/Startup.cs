@@ -44,9 +44,11 @@ namespace HRPayrollApp
             //    await context.Response.WriteAsync("Hello World!");
             //});
 
+
             app.UseMvc(route =>
             {
-                route.MapRoute(name: "", template: "{controller=Home}/{action=Index}");
+                //route.MapRoute(name: "", template: "{area=exists}/{controller=Home}/{action=Index}/{id?}");
+                route.MapRoute(name: "", template: "{controller=Employee}/{action=Index}");
             });
             app.UseStaticFiles();
         }

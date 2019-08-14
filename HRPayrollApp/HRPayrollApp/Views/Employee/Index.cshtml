@@ -2,7 +2,6 @@
     Layout = "_Layout";
 }
 @model List<Employee>
-
 <div class="container-fluid">
     <table class="table table-bordered table-striped" style="margin-left: 10%; margin-top: 2%; ">
         <thead class="thead-dark">
@@ -38,7 +37,7 @@
                     <td>@employee.Education</td>
                     <td>@employee.FamilyStatus</td>
                     <td>@employee.Gender</td>
-                    <td><img src="@employee.Photo" style="width:93px; height:87px" /></td>
+                    <td><img src="~/images/@employee.Photo" style="width:93px; height:87px" /></td>
                     <td><a href="@Url.Action("Edit","Employee",new { id=employee.Id})">Edit</a> / <a href="@Url.Action("Delete","Employee", new { id =employee.Id})">Delete</a></td>
                 </tr>
 

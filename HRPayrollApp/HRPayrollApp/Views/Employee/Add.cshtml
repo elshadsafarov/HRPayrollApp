@@ -1,0 +1,100 @@
+﻿@model HRPayrollApp.Models.Employee
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>Add</h2>
+
+<h4>Employee</h4>
+<hr />
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Add" asp-controller="Employee" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FatherName" class="control-label"></label>
+                    <input asp-for="FatherName" class="form-control" />
+                    <span asp-validation-for="FatherName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Birthday" class="control-label"></label>
+                    <input asp-for="Birthday" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CurrentAddress" class="control-label"></label>
+                    <input asp-for="CurrentAddress" class="form-control" />
+                    <span asp-validation-for="CurrentAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RegisterDistrict" class="control-label"></label>
+                    <input asp-for="RegisterDistrict" class="form-control" />
+                    <span asp-validation-for="RegisterDistrict" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PassportNum" class="control-label"></label>
+                    <input asp-for="PassportNum" class="form-control" />
+                    <span asp-validation-for="PassportNum" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PassExpireDate" class="control-label"></label>
+                    <input asp-for="PassExpireDate" class="form-control" />
+                    <span asp-validation-for="PassExpireDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Education" class="control-label"></label>
+                    <select asp-for="Education" class="form-control">
+
+                        <option value="1">Secondary</option>
+                        <option value="2">Bachelors</option>
+                        <option value="3">Master</option>
+                    </select>
+                    <span asp-validation-for="Education" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FamilyStatus" class="control-label"></label>
+                    <select asp-for="FamilyStatus" class="form-control">
+                        <option value="2">Single</option>
+                        <option value="1">Married</option>
+                        <option value="3">Engaged</option>
+                    </select>
+                    <span asp-validation-for="FamilyStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Photo" class="control-label"></label>
+                    <input asp-for="Photo" type="file" class="form-control" multiple />
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                    
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+          @*  <img src="~/images/@Model.Photo" style="width:50px; height:50px;" alt="Alternate Text" /> />*@
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

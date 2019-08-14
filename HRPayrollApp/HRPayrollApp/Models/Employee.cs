@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRPayrollApp.Models
 {
-    public class Employees
+    public class Employee
     {
         public int Id { get; set; }
 
@@ -47,6 +47,8 @@ namespace HRPayrollApp.Models
 
         [Required]
         public Gender Gender { get; set; }
+
+        public string Photo { get; set; }
 
     }
     
