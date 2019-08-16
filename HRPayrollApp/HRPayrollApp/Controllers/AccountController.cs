@@ -29,34 +29,36 @@ namespace HRPayrollApp.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = await _userManager.FindByEmailAsync(model.UsernameEmail);
+                User user = await _userManager.FindByEmailAsync(model.UserEmail);
 
                 if (user == null)
                 {
                     ModelState.AddModelError("", "User not exists");
+                    return RedirectToAction("Login", "Account");
+
                 }
 
                 if (user != null)
                 {
-                    var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, model.IsPresistent, true);
+                    var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password,true,true);
                     if (signInResult.Succeeded)
                     {
-                        return RedirectToAction("Index", "Employee");
+                       await _signInManager.SignInAsync(user,true);
+                       return RedirectToAction("Index", "Employee");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Email or password is incorrect!");
                     }
 
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Email is incorrect!");
-                    return RedirectToAction("Index", "Employee");
-                }
+              
             }
-            return View();
+            return View(model);
         }
 
 

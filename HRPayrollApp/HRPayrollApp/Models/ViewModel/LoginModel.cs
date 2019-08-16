@@ -10,11 +10,10 @@ namespace HRPayrollApp.Models.ViewModel
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string UsernameEmail { get; set; }
+        public string UserEmail { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public bool IsPresistent { get; set; }
     }
 }

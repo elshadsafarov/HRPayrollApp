@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HRPayrollApp.Models
+namespace HRPayrollApp.Models.ViewModel
 {
-    public class Employee
+    public class EmployeeModel
     {
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20,MinimumLength =3,ErrorMessage = "Minimum 3, Maximum 20 characters")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Minimum 3, Maximum 20 characters")]
         public string Name { get; set; }
 
         [Required]
@@ -24,8 +23,8 @@ namespace HRPayrollApp.Models
         public string FatherName { get; set; }
 
         [Required]
-        public DateTime Birthday { get; set;}
-
+        public DateTime Birthday { get; set; }
+            
         [Required]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "Minimum 3, Maximum 20  characters")]
         public string CurrentAddress { get; set; }
@@ -50,8 +49,5 @@ namespace HRPayrollApp.Models
         public Gender Gender { get; set; }
 
         public string Photo { get; set; }
-
     }
-    
-
 }

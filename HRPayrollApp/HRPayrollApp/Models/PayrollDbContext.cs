@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HRPayrollApp.Models
 {
-    public class PayrollDbContext : IdentityDbContext
+    public class PayrollDbContext : IdentityDbContext<User>
     {
         public PayrollDbContext(DbContextOptions<PayrollDbContext> options) : base(options)
         {

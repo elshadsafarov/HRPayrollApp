@@ -18,25 +18,26 @@ namespace HRPayrollApp.Core
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var configurtaion = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
                 User admin = new User()
                 {
                     Email = "elshad@gmail.com",
-                    Name = "Elsad",
+                    Name = "Elshad",
                     Surname = "Safarov",
-                    UserName = "Admin"
+                    UserName = "ElshadSafarov"
                 };
 
                 User user = new User()
                 {
                     Name = "Ali",
                     Surname = "Aliyev",
-                    Email = "Ali@gmail.com",
+                    Email = "ali@gmail.com",
                     UserName = "Ali123"
                 };
 
-               var adminResult = await userManager.CreateAsync(admin, configurtaion["Admin:Password"]);
+               var adminResult = await userManager.CreateAsync(admin, configuration["Admin:Password"]);
+
                var userResult =  await userManager.CreateAsync(user, "Ali@123");
 
                 if (adminResult.Succeeded)
@@ -44,7 +45,7 @@ namespace HRPayrollApp.Core
                     var roleCreate = await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
                     if (roleCreate.Succeeded)
                     {
-                    var roleAdd= await userManager.AddToRoleAsync(admin, "Admin");
+                    var roleAdd = await userManager.AddToRoleAsync(admin, "Admin");
                     }
                 }
 

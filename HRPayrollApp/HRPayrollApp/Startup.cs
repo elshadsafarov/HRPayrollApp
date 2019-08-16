@@ -24,14 +24,14 @@ namespace HRPayrollApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
+            services.AddDistributedMemoryCache();
             services.AddDbContext<PayrollDbContext>(x =>
             {
                 x.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
             });
-
+            services.AddSession();
             services.AddIdentity<User, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<PayrollDbContext>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +55,8 @@ namespace HRPayrollApp
                 route.MapRoute(name: "", template: "{controller=Employee}/{action=Index}");
             });
             app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseSession();
         }
     }
 }

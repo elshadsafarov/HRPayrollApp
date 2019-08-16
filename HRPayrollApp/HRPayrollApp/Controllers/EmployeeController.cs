@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HRPayrollApp.Models;
+using HRPayrollApp.Models.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,33 +15,56 @@ namespace HRPayrollApp.Controllers
 {
     public class EmployeeController : Controller
     {
-
+        private const int _ItemsPerPage = 2;
         private readonly PayrollDbContext dbContext;
         public readonly IHostingEnvironment hostingEnvironment;
-        public EmployeeController(PayrollDbContext context, IHostingEnvironment hosting)
+        private readonly SignInManager<User> _signInManager;
+        public EmployeeController(PayrollDbContext context,
+                                        IHostingEnvironment hosting,
+                                                SignInManager<User> signInManager)
         {
             dbContext = context;
             hostingEnvironment = hosting;
+            _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1 )
         {
-            List<Employee> employees = await dbContext.Employees.ToListAsync();
-            return View(employees);
+            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
+            var pagination = new Pagination
+            {
+                CurrentPage = page,
+                ItemsPerPage = _ItemsPerPage,
+                PageCount = dbContext.Employees.Count()
+            };
+
+            List<Employee> employees = await dbContext.Employees.Skip((pagination.CurrentPage-1)*pagination
+                                                                        .ItemsPerPage).Take(pagination.ItemsPerPage)
+                                                                                                    .ToListAsync();
+
+            PaginationModel paginationModel = new PaginationModel()
+            {
+                Employees = employees,
+                Paginations = pagination
+            };
+            return View(paginationModel);
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
             Employee employee = dbContext.Employees.Where(x => x.Id == id).FirstOrDefault();
             return View(employee);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Employee employee,int id, IFormFile Photo)
+        public async Task<IActionResult> Edit(Employee employee, int id, IFormFile Photo)
         {
             if (ModelState.IsValid)
             {
+
                 Employee cEmployee = dbContext.Employees.Where(x => x.Id == id).FirstOrDefault();
+
                 if (cEmployee != null)
                 {
                     cEmployee.Birthday = employee.Birthday;
@@ -53,12 +78,21 @@ namespace HRPayrollApp.Controllers
                     cEmployee.PassExpireDate = employee.PassExpireDate;
                     cEmployee.PassportNum = employee.PassportNum;
                     cEmployee.RegisterDistrict = employee.RegisterDistrict;
-                    string pathh = Path.Combine(hostingEnvironment.WebRootPath, "images", Photo.FileName);
-                    using (FileStream stream = new FileStream(pathh, FileMode.Create))
+                    if (Photo != null)
+
                     {
-                        await Photo.CopyToAsync(stream);
+                        string pathh = Path.Combine(hostingEnvironment.WebRootPath, "images", Photo.FileName);
+                        using (FileStream stream = new FileStream(pathh, FileMode.Create))
+                        {
+                            await Photo.CopyToAsync(stream);
+                        }
+
                     }
+
                 }
+
+
+
                 await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index", "Employee");
             }
@@ -68,6 +102,7 @@ namespace HRPayrollApp.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
             return View();
         }
 
@@ -100,7 +135,7 @@ namespace HRPayrollApp.Controllers
 
                 dbContext.Employees.Add(newEmployee);
                 await dbContext.SaveChangesAsync();
-                return RedirectToAction("Index","Employee");
+                return RedirectToAction("Index", "Employee");
             }
             return View();
         }
