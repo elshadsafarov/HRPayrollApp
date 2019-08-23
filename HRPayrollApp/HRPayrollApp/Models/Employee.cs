@@ -50,7 +50,7 @@ namespace HRPayrollApp.Models
         public Gender Gender { get; set; }
 
         public string Photo { get; set; }
-
+        public ICollection<OldWorkPlace> OldWorkPlaces { get; set; }
     }
     
 

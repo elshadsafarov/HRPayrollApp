@@ -26,6 +26,7 @@ namespace HRPayrollApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
             return View();
         }
         [HttpPost]

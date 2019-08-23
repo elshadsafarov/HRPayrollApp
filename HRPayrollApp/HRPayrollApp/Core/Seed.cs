@@ -14,11 +14,19 @@ namespace HRPayrollApp.Core
 
         public static async Task InvokeAsync(IServiceScope scope, PayrollDbContext context)
         {
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             if (!context.Roles.Any())
             {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();            
+
+                var AdminRoleCreate = await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
+
+                var HRRoleCreate = await roleManager.CreateAsync(new IdentityRole { Name = "HR" });
+            }
+
+            if (!context.Users.Any())
+            {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
                 User admin = new User()
                 {
@@ -26,6 +34,14 @@ namespace HRPayrollApp.Core
                     Name = "Elshad",
                     Surname = "Safarov",
                     UserName = "ElshadSafarov"
+                };
+
+                User HR = new User()
+                {
+                    Email = "nurlan@gmail.com",
+                    Name = "Nurlan",
+                    Surname = "Badirli",
+                    UserName = "NurlanBadirli"
                 };
 
                 User user = new User()
@@ -36,20 +52,21 @@ namespace HRPayrollApp.Core
                     UserName = "Ali123"
                 };
 
-               var adminResult = await userManager.CreateAsync(admin, configuration["Admin:Password"]);
+                var adminResult = await userManager.CreateAsync(admin, configuration["Admin:Password"]);
+                var HRResult = await userManager.CreateAsync(HR, configuration["HR:Password"]);
 
-               var userResult =  await userManager.CreateAsync(user, "Ali@123");
+                var userResult = await userManager.CreateAsync(user, "Ali@123");
 
                 if (adminResult.Succeeded)
                 {
-                    var roleCreate = await roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
-                    if (roleCreate.Succeeded)
-                    {
-                    var roleAdd = await userManager.AddToRoleAsync(admin, "Admin");
-                    }
+                    var AdminRoleAdd = await userManager.AddToRoleAsync(admin, "Admin");
                 }
 
 
+                if (HRResult.Succeeded)
+                {
+                    var HRRoleAdd = await userManager.AddToRoleAsync(HR, "HR");
+                }
             }
         }
     }

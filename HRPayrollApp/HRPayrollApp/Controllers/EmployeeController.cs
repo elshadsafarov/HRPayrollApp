@@ -28,7 +28,7 @@ namespace HRPayrollApp.Controllers
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> Index(int page = 1 )
+        public async Task<IActionResult> Index(int page = 1)
         {
             ViewBag.UserName = _signInManager.Context.User.Identity.Name;
             var pagination = new Pagination
@@ -38,16 +38,16 @@ namespace HRPayrollApp.Controllers
                 PageCount = dbContext.Employees.Count()
             };
 
-            List<Employee> employees = await dbContext.Employees.Skip((pagination.CurrentPage-1)*pagination
+            List<Employee> employees = await dbContext.Employees.Skip((pagination.CurrentPage - 1) * pagination
                                                                         .ItemsPerPage).Take(pagination.ItemsPerPage)
-                                                                                                    .ToListAsync();
+                                                                                          .ToListAsync();
 
-            PaginationModel paginationModel = new PaginationModel()
+            EmployeeModel employeeModel = new EmployeeModel()
             {
                 Employees = employees,
                 Paginations = pagination
             };
-            return View(paginationModel);
+            return View(employeeModel);
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -62,7 +62,6 @@ namespace HRPayrollApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 Employee cEmployee = dbContext.Employees.Where(x => x.Id == id).FirstOrDefault();
 
                 if (cEmployee != null)
@@ -78,17 +77,16 @@ namespace HRPayrollApp.Controllers
                     cEmployee.PassExpireDate = employee.PassExpireDate;
                     cEmployee.PassportNum = employee.PassportNum;
                     cEmployee.RegisterDistrict = employee.RegisterDistrict;
-                    if (Photo != null)
-
+                    if (Photo != null && Photo.FileName != cEmployee.Photo)
                     {
                         string pathh = Path.Combine(hostingEnvironment.WebRootPath, "images", Photo.FileName);
                         using (FileStream stream = new FileStream(pathh, FileMode.Create))
                         {
                             await Photo.CopyToAsync(stream);
                         }
+                        cEmployee.Photo = Photo.FileName;
 
                     }
-
                 }
 
 
@@ -102,7 +100,7 @@ namespace HRPayrollApp.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
+          
             return View();
         }
 
@@ -148,7 +146,58 @@ namespace HRPayrollApp.Controllers
                 dbContext.Employees.Remove(employees);
                 await dbContext.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Employee");
+        }
+
+
+        [HttpGet]
+        public  async Task<IActionResult> Details(int id)
+        {
+          var workPlace =  await dbContext.OldWorkPlace.Where(owp => owp.EmployeeId == id)
+                                                        .Include(x=>x.Employee)
+                                                                .FirstOrDefaultAsync();
+            return View(workPlace);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AddOldWorkPlaces(int id)
+        {
+            var employees = await dbContext.Employees.Where(x => x.Id == id).FirstOrDefaultAsync();
+            OldWorkPlaceModel model  = new OldWorkPlaceModel
+            {
+                Employee = employees
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOldWorkPlaces(OldWorkPlaceModel oldWorkPlace)
+        {
+            if (ModelState.IsValid)
+            {
+                if (oldWorkPlace == null)
+                {
+                    ModelState.AddModelError("", "Something went wrong");
+                    return RedirectToAction("AddOldWorkPlaces", "Employee");
+                }
+                else
+                {
+                    OldWorkPlace owp = new OldWorkPlace
+                    {
+                        WorkPlaceName = oldWorkPlace.WorkPlaceName,
+                        EmployeeId = oldWorkPlace.IdEmployee,
+                        FireDate = oldWorkPlace.FireDate,
+                        FireReason = oldWorkPlace.FireReason,
+                        HireDate = oldWorkPlace.HireDate
+                    };
+                    dbContext.OldWorkPlace.Add(owp);
+                    await dbContext.SaveChangesAsync();
+                    return RedirectToAction("Details", "Employee", new { id = oldWorkPlace.IdEmployee });
+                }
+            }
+            return View();
+        
         }
     }
 }

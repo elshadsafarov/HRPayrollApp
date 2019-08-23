@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Payroll Admin Panel</title>
     <!-- Styles -->
     <link href="~/css/lib/weather-icons.css" rel="stylesheet" />
@@ -15,7 +14,6 @@
     <link href="~/css/lib/themify-icons.css" rel="stylesheet">
     <link href="~/css/lib/menubar/sidebar.css" rel="stylesheet">
     <link href="~/css/lib/bootstrap.min.css" rel="stylesheet">
-
     <link href="~/css/lib/helper.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
 </head>
@@ -131,7 +129,7 @@
                             </li> -->
 
                             <li class="header-icon dib">
-                                <span class="user-avatar">@ViewBag.UserName<i class="ti-angle-down f-s-10"></i></span>
+                                <span class="user-avatar">@Context.User.Identity.Name<i class="ti-angle-down f-s-10"></i></span>
 
                                 <div class="drop-down dropdown-profile">
                                     <div class="dropdown-content-heading">
@@ -232,6 +230,7 @@
     <script src="~/js/lib/weather/weather-init.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel.min.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel-init.js"></script>
+    <script src="~/js/main.js"></script>
     <script src="~/js/scripts.js"></script>
     <!-- scripit init-->
 

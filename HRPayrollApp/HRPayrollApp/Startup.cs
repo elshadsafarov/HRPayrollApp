@@ -48,15 +48,15 @@ namespace HRPayrollApp
             //});
 
 
+            app.UseStaticFiles();
+            app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(route =>
             {
                 route.MapRoute(name: "", template: "{controller=Account}/{action=Login}");
                 route.MapRoute(name: "", template: "{area=exists}/{controller=Home}/{action=Index}/{id?}");
-                route.MapRoute(name: "", template: "{controller=Employee}/{action=Index}");
+                route.MapRoute(name: "", template: "{controller=Employee}/{action=Index}/{id?}");
             });
-            app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseSession();
         }
     }
 }

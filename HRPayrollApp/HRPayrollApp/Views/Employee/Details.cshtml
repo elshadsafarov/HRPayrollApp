@@ -1,0 +1,35 @@
+﻿@model OldWorkPlace
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="d-flex justify-content-center">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label asp-for="WorkPlaceName"></label>
+            <input type="text" asp-for="WorkPlaceName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FireDate"></label>
+            <input type="text" asp-for="FireDate" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HireDate"></label>
+            <input type="text" asp-for="HireDate" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FireReason"></label>
+            <textarea asp-for="FireReason" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Employee"></label>
+            <span class="form-control">@Model.Employee.Name @Model.Employee.Surname</span>
+        </div>
+    </form>
+</div>

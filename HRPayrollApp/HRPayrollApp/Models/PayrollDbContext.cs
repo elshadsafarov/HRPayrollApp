@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HRPayrollApp.Models;
 
 namespace HRPayrollApp.Models
 {
@@ -14,5 +15,6 @@ namespace HRPayrollApp.Models
 
         }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<OldWorkPlace> OldWorkPlace { get; set; }
     }
 }

@@ -1,9 +1,13 @@
 ﻿@{
     Layout = "_Layout";
 }
-@model PaginationModel
-<div class="container-fluid">
-    <table class="table table-bordered table-striped" style="margin-left: 10%; margin-top: 2%; ">
+@model EmployeeModel
+<div class="container-fluid  col-9">
+    <div class="form-inline my-2 my-lg-0 d-flex justify-content-center col-7">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </div>
+    <table class="table table-bordered table-striped" style="margin-left: 10%; margin-top:2%;" id="empTable">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Name</th>
@@ -21,7 +25,7 @@
                 <th scope="col">Edit/Delete</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tBody">
             @foreach (var employee in Model.Employees)
             {
                 <tr>
@@ -37,13 +41,23 @@
                     <td>@employee.FamilyStatus</td>
                     <td>@employee.Gender</td>
                     <td><img src="~/images/@employee.Photo" style="width:93px; height:87px" /></td>
-                    <td><a href="@Url.Action("Edit","Employee",new { id=employee.Id})">Edit</a> / <a href="@Url.Action("Delete","Employee", new { id =employee.Id})">Delete</a></td>
+                    <td><a href="@Url.Action("Edit","Employee",new { id=employee.Id})">Edit</a> / <a href="@Url.Action("Delete","Employee", new { id =employee.Id})">Delete</a> / <a href="@Url.Action("Details","Employee", new { id =employee.Id})">Details</a></td>
+                    <td class="text-right">
+                        <div class="form-check">
+                            <input type="checkbox" value="@employee.Id" class="form-check-input" id="check" />
+                        </div>
+                    </td>
                 </tr>
+
             }
+
         </tbody>
     </table>
-    <a href="@Url.Action("Add","Employee")" style="float:right">Add</a>
+    <a href="@Url.Action("Add","Employee")" style="float:right" class="btn btn-primary">Add</a>
+    <a href="#" style="float:right; display:none;" class="btn btn-secondary WorkPlace" id="WorkPlace">Add Old Workplace</a>
 
+
+    @* pagination of Employees *@
     <nav aria-label="...">
         <ul class="pagination d-flex justify-content-center">
             <li class="page-item disabled">
@@ -70,3 +84,4 @@
         </ul>
     </nav>
 </div>
+
