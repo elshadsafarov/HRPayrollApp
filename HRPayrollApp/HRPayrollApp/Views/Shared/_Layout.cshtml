@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,39 +15,27 @@
     <link href="~/css/lib/bootstrap.min.css" rel="stylesheet">
     <link href="~/css/lib/helper.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
+
 </head>
-
 <body>
-
     <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
-
         <div class="nano">
-
             <div class="nano-content">
-
                 <div class="logo"><a href="index.html"><span>Payroll Admin Panel</span></a></div>
-
                 <ul>
-
                     <li class="active">
                         <a class="sidebar-sub-toggle"><i class="ti-home"></i>Employees</a>
                     </li>
 
-
                     <li>
                         <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>HR</a>
                     </li>
-
                     <!-- <li><a><i class="ti-close"></i>Logout</a></li> -->
                 </ul>
-
             </div>
-
         </div>
-
     </div>
     <!-- /# sidebar -->
-
 
     <div class="header">
         <div class="container-fluid">
@@ -63,7 +50,6 @@
                     </div>
                     <div class="float-right">
                         <ul>
-
                             <!-- <li class="header-icon dib"><i class="ti-bell"></i>
                                 <div class="drop-down">
                                     <div class="dropdown-content-heading">
@@ -127,10 +113,8 @@
                                     </div>
                                 </div>
                             </li> -->
-
                             <li class="header-icon dib">
                                 <span class="user-avatar">@Context.User.Identity.Name<i class="ti-angle-down f-s-10"></i></span>
-
                                 <div class="drop-down dropdown-profile">
                                     <div class="dropdown-content-heading">
                                         <!-- <span class="text-left">Upgrade Now</span> -->
@@ -139,7 +123,6 @@
                                     <div class="dropdown-content-body">
                                         <ul>
                                             <li><a href="#"><i class="ti-user"></i> <span>Profile</span></a></li>
-
                                             <!-- <li><a href="#"><i class="ti-email"></i> <span>Inbox</span></a></li>
                                             <li><a href="#"><i class="ti-settings"></i> <span>Setting</span></a></li> -->
                                             <!-- <li><a href="#"><i class="ti-lock"></i> <span>Lock Screen</span></a></li> -->
@@ -155,17 +138,15 @@
         </div>
     </div>
 
-
     <div class="content-wrap">
-
     </div>
-    <div id="search">
-        <button type="button" class="close">×</button>
-        <form>
-            <input type="search" value="" placeholder="type keyword(s) here" />
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-    </div>
+    @*<div id="search">
+            <button type="button" class="close">×</button>
+            <form>
+                <input type="search" value="" placeholder="type keyword(s) here" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>*@
     @RenderBody()
     <!-- jquery vendor -->
     <script src="~/js/lib/jquery.min.js"></script>
@@ -175,22 +156,17 @@
     <script src="~/js/lib/preloader/pace.min.js"></script>
     <!-- sidebar -->
     <script src="~/js/lib/bootstrap.min.js"></script>
-
     <!-- bootstrap -->
-
     <script src="~/js/lib/circle-progress/circle-progress.min.js"></script>
     <script src="~/js/lib/circle-progress/circle-progress-init.js"></script>
-
     <script src="~/js/lib/morris-chart/raphael-min.js"></script>
     <script src="~/js/lib/morris-chart/morris.js"></script>
     <script src="~/js/lib/morris-chart/morris-init.js"></script>
-
     <!--  flot-chart js -->
     <script src="~/js/lib/flot-chart/jquery.flot.js"></script>
     <script src="~/js/lib/flot-chart/jquery.flot.resize.js"></script>
     <script src="~/js/lib/flot-chart/flot-chart-init.js"></script>
     <!-- // flot-chart js -->
-
 
     <script src="~/js/lib/vector-map/jquery.vmap.js"></script>
     <!-- scripit init-->
@@ -225,15 +201,12 @@
     <script src="~/js/lib/vector-map/country/jquery.vmap.usa.js"></script>
     <!-- scripit init-->
     <script src="~/js/lib/vector-map/vector.init.js"></script>
-
     <script src="~/js/lib/weather/jquery.simpleWeather.min.js"></script>
     <script src="~/js/lib/weather/weather-init.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel.min.js"></script>
     <script src="~/js/lib/owl-carousel/owl.carousel-init.js"></script>
     <script src="~/js/main.js"></script>
     <script src="~/js/scripts.js"></script>
-    <!-- scripit init-->
-
 </body>
 
 </html>

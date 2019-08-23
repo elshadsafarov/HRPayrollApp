@@ -8,9 +8,9 @@ namespace HRPayrollApp.Models
     public class Pagination
     {
         public int ItemsPerPage { get; set; } = 1;
-        public int PageCount { get; set; }
+        public int TotalItems { get; set; }
         public int CurrentPage { get; set; }
-        public int TotalItems
+        public int PageCount
         {
             get
             {

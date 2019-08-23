@@ -35,7 +35,7 @@ namespace HRPayrollApp.Controllers
             {
                 CurrentPage = page,
                 ItemsPerPage = _ItemsPerPage,
-                PageCount = dbContext.Employees.Count()
+                TotalItems = dbContext.Employees.Count()
             };
 
             List<Employee> employees = await dbContext.Employees.Skip((pagination.CurrentPage - 1) * pagination
@@ -48,6 +48,22 @@ namespace HRPayrollApp.Controllers
                 Paginations = pagination
             };
             return View(employeeModel);
+        }
+        [HttpPost]
+        public async Task<JsonResult> Filter(string value)
+        {
+            if (value == null)
+            {
+                List<Employee> employees = await dbContext.Employees.ToListAsync();
+                return Json(new { data = employees });
+            }
+            else
+            {
+                List<Employee> employees = await dbContext.Employees.
+                                                       Where(x => x.Name.Contains(value) || x.Name.StartsWith(value))
+                                                            .ToListAsync();
+                return Json(new { data = employees, count = dbContext.Employees.Count() });
+            }   
         }
         [HttpGet]
         public IActionResult Edit(int id)
@@ -140,6 +156,7 @@ namespace HRPayrollApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
+
             if (id != null)
             {
                 Employee employees = await dbContext.Employees.Where(emp => emp.Id == id).FirstOrDefaultAsync();

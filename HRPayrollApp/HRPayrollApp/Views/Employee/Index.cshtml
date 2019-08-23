@@ -4,8 +4,7 @@
 @model EmployeeModel
 <div class="container-fluid  col-9">
     <div class="form-inline my-2 my-lg-0 d-flex justify-content-center col-7">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="Search">
     </div>
     <table class="table table-bordered table-striped" style="margin-left: 10%; margin-top:2%;" id="empTable">
         <thead class="thead-dark">
@@ -22,7 +21,7 @@
                 <th scope="col">Family Status</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Photo</th>
-                <th scope="col">Edit/Delete</th>
+                <th scope="col">Edit/Delete/Details</th>
             </tr>
         </thead>
         <tbody id="tBody">
@@ -40,8 +39,8 @@
                     <td>@employee.Education</td>
                     <td>@employee.FamilyStatus</td>
                     <td>@employee.Gender</td>
-                    <td><img src="~/images/@employee.Photo" style="width:93px; height:87px" /></td>
-                    <td><a href="@Url.Action("Edit","Employee",new { id=employee.Id})">Edit</a> / <a href="@Url.Action("Delete","Employee", new { id =employee.Id})">Delete</a> / <a href="@Url.Action("Details","Employee", new { id =employee.Id})">Details</a></td>
+                    <td> <img src="~/images/@employee.Photo" style="width:93px; height:87px" /> </td>
+                    <td><a href="@Url.Action("Edit", "Employee", new { id = employee.Id })">Edit</a> / <a href="@Url.Action("Delete", "Employee", new { id = employee.Id })">Delete</a> / <a href="@Url.Action("Details", "Employee", new { id = employee.Id })">Details</a></td>
                     <td class="text-right">
                         <div class="form-check">
                             <input type="checkbox" value="@employee.Id" class="form-check-input" id="check" />
@@ -53,15 +52,26 @@
 
         </tbody>
     </table>
-    <a href="@Url.Action("Add","Employee")" style="float:right" class="btn btn-primary">Add</a>
+    <a href="@Url.Action("Add", "Employee")" style="float:right" class="btn btn-primary">Add</a>
     <a href="#" style="float:right; display:none;" class="btn btn-secondary WorkPlace" id="WorkPlace">Add Old Workplace</a>
 
 
     @* pagination of Employees *@
-    <nav aria-label="...">
+<nav aria-label="...">
+    @{ 
+        string className = null;
+        if (Model.Paginations.CurrentPage == 1)
+        {
+            className = "disabled";
+        }
+        else
+        {
+            className = "";
+        }
+    }
         <ul class="pagination d-flex justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            <li class="page-item @className" id="prev">
+                <a class="page-link" asp-action="Index" asp-controller="Employee" asp-route-page="@(Model.Paginations.CurrentPage-1)" tabindex="-1">Previous</a>
             </li>
             @for (int i = 1; i <= Model.Paginations.PageCount; i++)
             {
@@ -69,19 +79,20 @@
                 {
                     <li class="page-item active">
 
-                        <a class="page-link" href="#">@i<span class="sr-only">(current)</span></a>
+                        <a class="page-link" asp-action="Index" asp-controller="Employee" asp-route-page="@i">@i<span class="sr-only">(current)</span></a>
                     </li>
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link" href="#">@i</a></li>
+                    <li class="page-item"><a class="page-link"  asp-action="Index" asp-controller="Employee" asp-route-page="@i">@i</a></li>
 
                 }
             }
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" id="next" asp-action="Index" asp-controller="Employee" asp-route-page="@(Model.Paginations.CurrentPage+1)">Next</a>
             </li>
         </ul>
     </nav>
 </div>
+
 
