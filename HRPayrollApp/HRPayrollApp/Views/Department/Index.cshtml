@@ -1,0 +1,27 @@
+﻿@model List<Department>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center col-9">
+        <table class="table table-bordered table-striped" style="margin-left: 10%; margin-top:2%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Edit / Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var department in Model)
+                {
+                    <tr>
+                        <td>@department.Name</td>
+                        <td><a href="@Url.Action("Edit","Department",new { id = department.Id})">Edit</a> / <a href="@Url.Action("Delete","Department", new { id = department.Id})"> Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="@Url.Action("Add","Department")" style="float:left" class="btn btn-secondary">Add Department</a>
+    </div>
+</div>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRPayrollApp.Models;
 using HRPayrollApp.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HRPayrollApp.Controllers
 {
+    [Authorize(Roles ="HR")]
     public class EmployeeController : Controller
     {
         private const int _ItemsPerPage = 2;
@@ -63,17 +65,17 @@ namespace HRPayrollApp.Controllers
                                                        Where(x => x.Name.Contains(value) || x.Name.StartsWith(value))
                                                             .ToListAsync();
                 return Json(new { data = employees, count = dbContext.Employees.Count() });
-            }   
+            }
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            ViewBag.UserName = _signInManager.Context.User.Identity.Name;
             Employee employee = dbContext.Employees.Where(x => x.Id == id).FirstOrDefault();
             return View(employee);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Employee employee, int id, IFormFile Photo)
         {
             if (ModelState.IsValid)
@@ -116,38 +118,46 @@ namespace HRPayrollApp.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-          
+
             return View();
         }
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(Employee employee, IFormFile Photo)
         {
             if (ModelState.IsValid)
             {
-                Employee newEmployee = new Employee();
-
-                newEmployee.Birthday = employee.Birthday;
-                newEmployee.Name = employee.Name;
-                newEmployee.Surname = employee.Surname;
-                newEmployee.FatherName = employee.Surname;
-                newEmployee.Birthday = employee.Birthday;
-                newEmployee.CurrentAddress = employee.CurrentAddress;
-                newEmployee.Education = employee.Education;
-                newEmployee.FamilyStatus = employee.FamilyStatus;
-                newEmployee.Gender = employee.Gender;
-                newEmployee.PassExpireDate = employee.PassExpireDate;
-                string pathh = Path.Combine(hostingEnvironment.WebRootPath, "images", Photo.FileName);
-                using (FileStream stream = new FileStream(pathh, FileMode.Create))
+                if (Photo != null)
                 {
-                    await Photo.CopyToAsync(stream);
-                }
-                newEmployee.Photo = Photo.FileName;
-                newEmployee.RegisterDistrict = employee.RegisterDistrict;
-                newEmployee.PassportNum = employee.PassportNum;
+                    Employee newEmployee = new Employee();
 
-                dbContext.Employees.Add(newEmployee);
+                    newEmployee.Birthday = employee.Birthday;
+                    newEmployee.Name = employee.Name;
+                    newEmployee.Surname = employee.Surname;
+                    newEmployee.FatherName = employee.Surname;
+                    newEmployee.Birthday = employee.Birthday;
+                    newEmployee.CurrentAddress = employee.CurrentAddress;
+                    newEmployee.Education = employee.Education;
+                    newEmployee.FamilyStatus = employee.FamilyStatus;
+                    newEmployee.Gender = employee.Gender;
+                    newEmployee.PassExpireDate = employee.PassExpireDate;
+                    string pathh = Path.Combine(hostingEnvironment.WebRootPath, "images", Photo.FileName);
+                    using (FileStream stream = new FileStream(pathh, FileMode.Create))
+                    {
+                        await Photo.CopyToAsync(stream);
+                    }
+                    newEmployee.Photo = Photo.FileName;
+                    newEmployee.RegisterDistrict = employee.RegisterDistrict;
+                    newEmployee.PassportNum = employee.PassportNum;
+
+                    dbContext.Employees.Add(newEmployee);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Photo can not be empty");
+                }
                 await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index", "Employee");
             }
@@ -168,12 +178,22 @@ namespace HRPayrollApp.Controllers
 
 
         [HttpGet]
-        public  async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-          var workPlace =  await dbContext.OldWorkPlace.Where(owp => owp.EmployeeId == id)
-                                                        .Include(x=>x.Employee)
-                                                                .FirstOrDefaultAsync();
-            return View(workPlace);
+                var workPlace = await dbContext.OldWorkPlace.Where(owp => owp.EmployeeId == id)
+                                                      .Include(x => x.Employee)
+                                                              .FirstOrDefaultAsync();
+            if (workPlace == null)
+            {
+                return RedirectToAction("Index","Employee");
+            }
+            else
+            {
+                return View(workPlace);
+
+            }
+
+
         }
 
 
@@ -181,7 +201,7 @@ namespace HRPayrollApp.Controllers
         public async Task<IActionResult> AddOldWorkPlaces(int id)
         {
             var employees = await dbContext.Employees.Where(x => x.Id == id).FirstOrDefaultAsync();
-            OldWorkPlaceModel model  = new OldWorkPlaceModel
+            OldWorkPlaceModel model = new OldWorkPlaceModel
             {
                 Employee = employees
             };
@@ -189,6 +209,7 @@ namespace HRPayrollApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOldWorkPlaces(OldWorkPlaceModel oldWorkPlace)
         {
             if (ModelState.IsValid)
@@ -214,7 +235,7 @@ namespace HRPayrollApp.Controllers
                 }
             }
             return View();
-        
+
         }
     }
 }

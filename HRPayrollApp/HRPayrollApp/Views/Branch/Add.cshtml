@@ -1,0 +1,57 @@
+﻿@model BranchViewModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>Add</h2>
+
+<h4>Branch</h4>
+<hr />
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input class="form-control" name="Name" />
+                    @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Address</label>
+                    <input class="form-control" type="text" name="Address" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="Name">Company Name</label>
+                    <select class="form-control" name="CompanyId">
+
+                        @foreach (var item in Model.Companies)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                    @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label for-="IsHead" class="control-label">IsHead</label>
+                    <select class="form-control" name="IsHead">
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+

@@ -29,7 +29,7 @@
 
 
   
-
+    //search for employees
     $("#Search").keyup(function () {
 
         var search = $(this).val();
@@ -45,7 +45,7 @@
             contentType: false,
             processData: false,
             success: function (response) {
-                $("tbody tr").remove()
+                $("tbody tr").remove();
                 for (var item of response.data) {
                     var row = `<tr>
                              <td>${item.name}</td>
@@ -65,28 +65,18 @@
                         <div class="form-check">
                             <input type="checkbox" value="@employee.Id" class="form-check-input" id="check" />
                         </div>
-                  
-</td>
-                       </tr>`
+                            </td>
+                       </tr>`;
                     $("tbody").append(row);
                 }
             }
         });
     });
 
-    //var buttonclicked = false;
-    var prev =$("#prev").val();
-    //$("#next").click(function () {
-    //    if (buttonclicked === false) {
-    //        buttonclicked = true;
-    //        prev.classList.remove("disabled");
-    //    };
+    //delete active class from left bar
+    //$(".logo ul li").click(function () {
+    //    $("ul li.active").removeClass("active");
+    //    $(this).addClass("active");
     //});
-    if ($("#next").click() === true)
-    {
-        $("li.disabled").removeClass('disabled');
-    }
-    $("#next").click(function () {
 
-    })
 });

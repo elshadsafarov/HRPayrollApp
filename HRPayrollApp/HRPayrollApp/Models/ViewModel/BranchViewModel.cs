@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HRPayrollApp.Models
+namespace HRPayrollApp.Models.ViewModel
 {
-    public class Branch
+    public class BranchViewModel
     {
-        public int Id { get; set; }
+        public List<Branch> Branches { get; set; }
+        public List<Company> Companies { get; set; }
+        public Branch  Branch{ get; set;  }
+
         public string Name { get; set; }
         public bool IsHead { get; set; }
         public string Address { get; set; }
-        
-        public Company Company { get; set; }
         public int CompanyId { get; set; }
     }
 }

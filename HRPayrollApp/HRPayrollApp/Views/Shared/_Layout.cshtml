@@ -16,6 +16,7 @@
     <link href="~/css/lib/helper.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
 
+
 </head>
 <body>
     <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
@@ -24,11 +25,19 @@
                 <div class="logo"><a href="index.html"><span>Payroll Admin Panel</span></a></div>
                 <ul>
                     <li class="active">
-                        <a class="sidebar-sub-toggle"><i class="ti-home"></i>Employees</a>
+                        <a href="@Url.Action("Index","Employee")" sidebar-sub-toggle"><i class="ti-home"></i>Employees</a>
                     </li>
 
-                    <li>
-                        <a class="sidebar-sub-toggle"><i class="ti-bar-chart-alt"></i>HR</a>
+                    <li id="active">
+                        <a href="@Url.Action("Index","Holding")" sidebar-sub-toggle"><i class="ti-home"></i>Holdings</a>
+                    </li>
+
+                    <li id="active">
+                        <a href="@Url.Action("Index","Department")" sidebar-sub-toggle"><i class="ti-home"></i>Departments</a>
+                    </li>
+
+                    <li id="active">
+                        <a href="@Url.Action("Index","Branch")" sidebar-sub-toggle"><i class="ti-home"></i>Branches</a>
                     </li>
                     <!-- <li><a><i class="ti-close"></i>Logout</a></li> -->
                 </ul>

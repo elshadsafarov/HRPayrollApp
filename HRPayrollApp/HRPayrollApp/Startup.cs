@@ -30,7 +30,8 @@ namespace HRPayrollApp
                 x.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
             });
             services.AddSession();
-            services.AddIdentity<User, IdentityRole>().AddDefaultTokenProviders().AddEntityFrameworkStores<PayrollDbContext>();
+            services.AddIdentity<User, IdentityRole>().AddDefaultTokenProviders()
+                                                .AddEntityFrameworkStores<PayrollDbContext>();
             services.AddMvc();
         }
 

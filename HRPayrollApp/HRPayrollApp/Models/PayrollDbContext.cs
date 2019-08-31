@@ -16,5 +16,10 @@ namespace HRPayrollApp.Models
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<OldWorkPlace> OldWorkPlace { get; set; }
+        public DbSet<Holding> Holdings { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        
     }
 }

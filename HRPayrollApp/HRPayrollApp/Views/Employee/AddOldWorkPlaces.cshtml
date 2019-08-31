@@ -7,6 +7,13 @@
 <hr />
 <div class="container">
     <div class="row  d-flex justify-content-center">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Employee")">Employee</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("AddOldWorkPlaces","Employee")">Add Old Work Places</a></li>
+                @* <li class="breadcrumb-item active" aria-current="page">Data</li>*@
+            </ol>
+        </nav>
         <div class="col-md-7">
             <h2>AddOldWorkPlaces</h2>
             <form asp-action="AddOldWorkPlaces" method="post">
@@ -33,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="IdEmployee" class="control-label"></label>
-                    <input asp-for="IdEmployee" type="text" id="Employee" hidden  class="form-control" value="@Model.Employee.Id"/>
+                    <input asp-for="IdEmployee" type="text" id="Employee" hidden class="form-control" value="@Model.Employee.Id" />
                     <span class="form-control">@Model.Employee.Name @Model.Employee.Surname</span>
                 </div>
                 <div class="form-group">

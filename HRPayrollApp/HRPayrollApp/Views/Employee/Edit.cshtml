@@ -10,12 +10,14 @@
 
 <hr />
 <div class="container">
-
-
     <div class="row d-flex justify-content-center">
-        <h2>Employees -> Edit</h2>
-
-
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Employee")">Employee</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("Edit","Employee")">Edit </a></li>
+               @* <li class="breadcrumb-item active" aria-current="page">Data</li>*@
+            </ol>
+        </nav>
         <div class="col-md-4">
             <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -95,7 +97,7 @@
                 <div class="form-group">
                     <input type="submit" value="Edit" class="btn btn-default" />
                 </div>
-                <img src="~/images/@Model.Photo" style="width:100px;height150px;" alt="Alternate Text" />
+                <img src="~/images/@Model.Photo" style="width:100px; height:150px;" alt="Alternate Text" />
             </form>
         </div>
     </div>
