@@ -4,14 +4,16 @@ using HRPayrollApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HRPayrollApp.Migrations
 {
     [DbContext(typeof(PayrollDbContext))]
-    partial class PayrollDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190904131934_WorkPlaceAdded")]
+    partial class WorkPlaceAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,25 +40,6 @@ namespace HRPayrollApp.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Branches");
-                });
-
-            modelBuilder.Entity("HRPayrollApp.Models.BranchPosition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BranchId");
-
-                    b.Property<int>("PositionId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("PositionId");
-
-                    b.ToTable("BranchPositions");
                 });
 
             modelBuilder.Entity("HRPayrollApp.Models.Company", b =>
@@ -387,19 +370,6 @@ namespace HRPayrollApp.Migrations
                     b.HasOne("HRPayrollApp.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("HRPayrollApp.Models.BranchPosition", b =>
-                {
-                    b.HasOne("HRPayrollApp.Models.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("HRPayrollApp.Models.Position", "Position")
-                        .WithMany()
-                        .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

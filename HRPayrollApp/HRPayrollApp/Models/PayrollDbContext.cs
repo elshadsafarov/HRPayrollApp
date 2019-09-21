@@ -20,6 +20,9 @@ namespace HRPayrollApp.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<WorkPlace> WorkPlaces { get; set; }
+        public DbSet<BranchPosition> BranchPositions { get; set; }
         
     }
 }

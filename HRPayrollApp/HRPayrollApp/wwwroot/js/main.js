@@ -1,34 +1,25 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
 
-    var button = document.getElementById("WorkPlace");
-    //var checkedValue = $('#tBody:checked').val();
-    var checkedValue = document.querySelector('#tBody').checked;
-
+    var OldWorkPlaceButton = document.getElementById("OldWorkPlace");
+    var NewWorkPlaceButton = document.getElementById("WorkPlace");
+ 
     var employee = $("#Employee").val();
     var href = null;
     $("#tBody").on("click", "tr td div #check", function () {
 
-        if ($(this).prop("checked") == true) {
-            button.style.display = "block";
+        if ($(this).prop("checked") === true) {
             var id = $(this).val();
-            href = "/Employee/AddOldWorkPlaces?id=" + id;
+            OldWorkPlaceButton.style.display = "block";
+            NewWorkPlaceButton.style.display = "block";
+          
         }
         else {
-            button.style.display = "none";
+            OldWorkPlaceButton.style.display = "none";
+            NewWorkPlaceButton.style.display = "none";
         }
-    });
-    button.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.href = href;
+
     });
 
-    $("#check").on("click", function () {
-        var id = $(this).val();
-        $("#WorkPlace").href = "Employee/AddOldWorkPlaces?id=" + id;
-    });
-
-
-  
     //search for employees
     $("#Search").keyup(function () {
 
@@ -73,10 +64,86 @@
         });
     });
 
-    //delete active class from left bar
-    //$(".logo ul li").click(function () {
-    //    $("ul li.active").removeClass("active");
-    //    $(this).addClass("active");
-    //});
 
+    //when holdings select change companies
+    $("#holdings").change(function () {
+
+        var id = $(this).val();
+        $("#companies option").remove();
+        $.ajax({
+            url: "/WorkPlace/FillCompanies/" + id,
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+
+                    var EmptyOption = `<option selected>Select company</option>`;
+                    $("#companies").append(EmptyOption);
+                    for (var i = 0; i < response.data.length; i++) {
+
+                        var option = `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
+                        $("#companies").append(option);
+                    }
+                }
+
+            }
+
+        });
+    });
+
+
+
+    //when company select change branch
+    $("#companies").change(function () {
+
+        var id = $(this).val();
+        $("#branches option").remove();
+        $.ajax({
+            url: "/WorkPlace/FillBranches/" + id,
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+
+                    var EmptyOption = `<option selected>Select branch</option>`;
+                    $("#branches").append(EmptyOption);
+                    for (var i = 0; i < response.data.length; i++) {
+
+                        var option = `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
+                        $("#branches").append(option);
+                    }
+                }
+
+            }
+
+        });
+    });
+
+
+
+    //when department select change position
+    $("#departments").change(function () {
+
+        var id = $(this).val();
+        $("#positions option").remove();
+        $.ajax({
+            url: "/WorkPlace/FillPositions/" + id,
+            type: "post",
+            dataType: "json",
+            success: function (response) {
+                if (response.status === 200) {
+
+                    var EmptyOption = `<option selected>Select Position</option>`;
+                    $("#positions").append(EmptyOption);
+                    for (var i = 0; i < response.data.length; i++) {
+
+                        var option = `<option value="${response.data[i].id}">${response.data[i].name}</option>`;
+                        $("#positions").append(option);
+                    }
+                }
+
+            }
+
+        });
+    });
 });

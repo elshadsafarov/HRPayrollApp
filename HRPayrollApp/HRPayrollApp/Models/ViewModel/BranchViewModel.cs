@@ -9,8 +9,8 @@ namespace HRPayrollApp.Models.ViewModel
     {
         public List<Branch> Branches { get; set; }
         public List<Company> Companies { get; set; }
-        public Branch  Branch{ get; set;  }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public bool IsHead { get; set; }
         public string Address { get; set; }

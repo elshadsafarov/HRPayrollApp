@@ -22,6 +22,7 @@
                 <th scope="col">Gender</th>
                 <th scope="col">Photo</th>
                 <th scope="col">Edit/Delete/Details</th>
+                <th>Add WorkPlace</th>
             </tr>
         </thead>
         <tbody id="tBody">
@@ -46,6 +47,9 @@
                             <input type="checkbox" value="@employee.Id" class="form-check-input" id="check" />
                         </div>
                     </td>
+                    <td>
+                    <a href="@Url.Action("AddOldWorkPlaces","Employee",new { id= employee.Id})" style="display:none;" class="col-6 btn btn-secondary WorkPlace" id="OldWorkPlace">Old</a> / <a href="@Url.Action("Add","WorkPlace",new { empId= employee.Id})" style="display:none;" class="col-6 btn btn-secondary WorkPlace" id="WorkPlace">New</a>
+                    </td>
                 </tr>
 
             }
@@ -53,22 +57,22 @@
         </tbody>
     </table>
     <a href="@Url.Action("Add", "Employee")" style="float:right" class="btn btn-primary">Add</a>
-    <a href="#" style="float:right; display:none;" class="btn btn-secondary WorkPlace" id="WorkPlace">Add Old Workplace</a>
+    
 
 
     @* pagination of Employees *@
-<nav aria-label="...">
-    @{ 
-        string className = null;
-        if (Model.Paginations.CurrentPage == 1)
-        {
-            className = "disabled";
+    <nav aria-label="...">
+        @{
+            string className = null;
+            if (Model.Paginations.CurrentPage == 1)
+            {
+                className = "disabled";
+            }
+            else
+            {
+                className = "";
+            }
         }
-        else
-        {
-            className = "";
-        }
-    }
         <ul class="pagination d-flex justify-content-center">
             <li class="page-item @className" id="prev">
                 <a class="page-link" asp-action="Index" asp-controller="Employee" asp-route-page="@(Model.Paginations.CurrentPage-1)" tabindex="-1">Previous</a>
@@ -84,7 +88,7 @@
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link"  asp-action="Index" asp-controller="Employee" asp-route-page="@i">@i</a></li>
+                    <li class="page-item"><a class="page-link" asp-action="Index" asp-controller="Employee" asp-route-page="@i">@i</a></li>
 
                 }
             }

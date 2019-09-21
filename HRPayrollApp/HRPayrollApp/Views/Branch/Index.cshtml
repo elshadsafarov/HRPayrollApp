@@ -10,16 +10,18 @@
             <th>Name</th>
             <th>Company Name</th>
             <th>Is Head Office?</th>
+            <th>Edit / Delete</th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var item in Model.Branches)
+        @foreach (var branch in Model.Branches)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.Company.Name</td>
-                <td>@item.IsHead</td>
+                <td>@branch.Name</td>
+                <td>@branch.Company.Name</td>
+                <td>@branch.IsHead</td>
+                <td><a href="@Url.Action("Edit","Branch", new { id = branch.Id})"> Edit</a> / <a href="@Url.Action("Delete","Branch",new { id = branch.Id})">Delete</a></td>
             </tr>
         }
     </tbody>

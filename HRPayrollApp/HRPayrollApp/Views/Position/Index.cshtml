@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model PositionViewModel
+
+<div class="container d-flex justify-content-center" >
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Department Name</th>
+            <th>Edit / Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var position in Model.Positions)
+        {
+            <tr>
+                <td>@position.Name</td>
+                <td>@position.Department.Name</td>
+                <td><a href="@Url.Action("Edit","Position", new { id= position.Id})">Edit</a> / <a href="@Url.Action("Delete","Position", new { id = position.Id})">Delete</a></td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+</div>
+
+<a href="@Url.Action("Add","Position")" style="float:right" class="btn btn-primary">Add Position</a>

@@ -1,0 +1,80 @@
+﻿@model WorkPlaceModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h2>Add</h2>
+
+<h4>WorkPlace</h4>
+<hr />
+<div class="row  d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="Employee" class="control-label"></label>*@
+                <input class="form-control" value="@Model.Employee.Name @Model.Employee.Surname" disabled />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Department Name</label>
+                <select class="form-control" asp-items="ViewBag.PositionId" id="departments">
+                    <option selected>Select department</option>
+                    @foreach (var department in Model.Departments)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Holding Name</label>
+                <select class="form-control" id="holdings">
+                    <option selected>Select Holding</option>
+                    @foreach (var holding in Model.Holdings)
+                    {
+                        <option value="@holding.Id">@holding.Name</option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label">Position Name</label>
+                <select class="form-control"  id="positions">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Company Name</label>
+                <select class="form-control"  id="companies">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Branch Name</label>
+                <select class="form-control"  id="branches">
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="EntryDate" class="control-label"></label>
+                <input asp-for="EntryDate" class="form-control" />
+                <span asp-validation-for="EntryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeftDate" class="control-label"></label>
+                <input asp-for="LeftDate" class="form-control" />
+                <span asp-validation-for="LeftDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

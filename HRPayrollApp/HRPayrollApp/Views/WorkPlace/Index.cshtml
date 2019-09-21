@@ -1,0 +1,27 @@
+﻿@model ICollection<WorkPlace>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Employee Name</th>
+        <th>Position Name</th>
+        <th>Branch Name</th>
+        <th>Entry Date</th>
+        <th>Left Name</th>
+    </tr>
+    <tr>
+        @foreach (var item in Model)
+        {
+            <td>@item.Employee.Name  @item.Employee.Surname</td>
+            <td>@item.Position.Name</td>
+            <td>@item.Branch.Name</td>
+            <td>@item.EntryDate</td>
+            <td>@item.LeftDate</td>
+        }
+    </tr>
+
+</table>
+
